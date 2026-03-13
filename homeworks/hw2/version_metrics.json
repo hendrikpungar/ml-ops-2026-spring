@@ -1,0 +1,42 @@
+{
+  "version_1": {
+    "description": "Existing model from Practice 1 with original data/model/code baseline.",
+    "data": "January 2021",
+    "model": "regression_model_v1.joblib",
+    "code": "Practice 1 training pipeline"
+  },
+  "version_2": {
+    "description": "Existing trained model evaluated on new combined-data split.",
+    "data": "January + February 2021",
+    "model": "regression_model_v1.joblib",
+    "code": "Same training model, updated evaluation data/split",
+    "metrics": {
+      "r2": 0.8908499895785963,
+      "mae": 3.0615816629151684,
+      "rmse": 5.090126452035322
+    }
+  },
+  "version_3": {
+    "description": "Model retrained on the new combined-data training set.",
+    "data": "January + February 2021",
+    "model": "regression_model_v3.joblib",
+    "code": "Same model family retrained on updated train set",
+    "metrics": {
+      "r2": 0.8910372009712021,
+      "mae": 3.1165747676848325,
+      "rmse": 5.085759349278877
+    }
+  },
+  "delta_v3_minus_v2": {
+    "r2": 0.00018721139260580166,
+    "mae": 0.054993104769664125,
+    "rmse": -0.004367102756444474
+  },
+  "features": [
+    "trip_distance",
+    "passenger_count",
+    "PULocationID"
+  ],
+  "target": "total_amount",
+  "split": "train_test_split(test_size=0.2, random_state=42)"
+}

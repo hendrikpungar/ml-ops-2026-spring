@@ -1,0 +1,5 @@
+outs:
+- md5: 21f1348e81e0976e7db72cb01dbbaf8c
+  size: 897
+  hash: md5
+  path: regression_model_v1.joblib
