@@ -4,11 +4,11 @@
 - GitHub: https://github.com/hendrikpungar/ml-ops-2026-spring
 - Branch used for this practice: `regression-model`
 
-## Versioning Summary
+## Versioning summary
 
 ### Version 1
 - Data: January 2021 (`green_tripdata_2021-01.parquet`)
-- Model: Existing Practice 1 model (`regression_model_v1.joblib`)
+- Model: Practice 1 model (`regression_model_v1.joblib`)
 - Code: Practice 1 training code
 
 ### Version 2
@@ -27,22 +27,22 @@
 - Features: `trip_distance`, `passenger_count`, `PULocationID`
 - Metrics: R2 = 0.89104, MAE = 3.11657, RMSE = 5.08576
 
-## What Is Happening in V2 Results
-When the old model (trained on January-only patterns) is tested on a split from the combined January+February data, performance can shift due to data distribution change between months. This is expected: seasonal, operational, or behavior differences in February can cause mild performance drift.
+## What is happening in V2 results
+When the old model is tested on a split from the combined January+February data, performance can shift due to data distribution change between months. This is expected: seasonal, operational, or behavior differences in February can cause mild performance drift.
 
-## V2 -> V3 Result Interpretation
+## V2 -> V3 result interpretation
 Retraining on the combined training set lets the model learn from the newer month as well, which usually improves or stabilizes generalization on the combined test set. Any gain in R2 and decrease in MAE/RMSE indicates the model has adapted to the updated data distribution.
 
 In this run, R2 increased slightly (+0.00019) and RMSE improved slightly (-0.00437), while MAE increased (+0.05499). This indicates only marginal overall change: retraining helped a little on squared-error behavior but did not improve absolute error.
 
-## Monitoring Plan for Production (Version 3)
+## Monitoring plan for production (Version 3)
 
 ### 1) Data-related metric
-- Metric: Population Stability Index (PSI) for `trip_distance` (or distribution drift using KS test)
+- Metric: Population Stability Index (PSI) for `trip_distance` or distribution drift using KS test
 - Threshold idea: PSI > 0.2 indicates moderate shift, PSI > 0.3 severe shift
 
 ### 2) Model-performance metric
-- Metric: Rolling MAE (and RMSE) on labeled feedback data
+- Metric: Rolling MAE on labeled feedback data
 - Threshold idea: Retrain if MAE worsens by >10% for 2+ consecutive windows
 
 ### 3) System metric
@@ -55,8 +55,4 @@ In this run, R2 increased slightly (+0.00019) and RMSE improved slightly (-0.004
 
 ## DVC Notes
 - Data and model artifacts are tracked with DVC metadata (`.dvc` files), not committed directly to git as raw artifacts.
-- Configure your Google Drive remote with:
-  ```powershell
-  c:/Users/hendr/Desktop/andmeteadus/mlops/.venv/Scripts/python.exe -m dvc remote add -d storage gdrive://<YOUR_FOLDER_ID>
-  c:/Users/hendr/Desktop/andmeteadus/mlops/.venv/Scripts/python.exe -m dvc push
-  ```
+
